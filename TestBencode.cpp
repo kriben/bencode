@@ -21,7 +21,11 @@ void TestBencode::testDecodeIllegalInts()
   CPPUNIT_ASSERT_THROW(Bencode::decodeInt(""), std::invalid_argument);  
   CPPUNIT_ASSERT_THROW(Bencode::decodeInt("    "), std::invalid_argument);  
   CPPUNIT_ASSERT_THROW(Bencode::decodeInt("i0f"), std::invalid_argument);  
+  CPPUNIT_ASSERT_THROW(Bencode::decodeInt("i-1-2e"), std::invalid_argument);
+  CPPUNIT_ASSERT_THROW(Bencode::decodeInt("i-0e"), std::invalid_argument);
 }
+
+
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencode);
