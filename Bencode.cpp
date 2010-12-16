@@ -15,9 +15,8 @@ int Bencode::decodeInt(const std::string& encoded)
   if (encoded[encoded.size() - 1] != 'e')
     throw std::invalid_argument("Incorrect encoding: does not end with 'e'");
   
-  int first = 1;
   int length = 0;
-  int i = first;
+  int i = 1;
   bool isNegative = false;
   while (encoded[i] == '-' || (encoded[i] >= '0' && encoded[i] <= '9')) {
     if (encoded[i] == '-') {
@@ -31,7 +30,7 @@ int Bencode::decodeInt(const std::string& encoded)
     length++;
   }
 
-  std::istringstream stream(encoded.substr(first, length));
+  std::istringstream stream(encoded.substr(1, length));
   int value;
   stream >> value;
 
