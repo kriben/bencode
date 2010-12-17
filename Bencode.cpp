@@ -1,8 +1,12 @@
 #include "Bencode.h"
 
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string.hpp>
+
 #include <cassert>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 
 int Bencode::decodeInt(const std::string& encoded)
 {
@@ -38,5 +42,17 @@ int Bencode::decodeInt(const std::string& encoded)
     throw std::invalid_argument("Negative zero is not allowed");
     
   return value;
+}
+
+std::string Bencode::decodeString(const std::string& encoded)
+{
+  std::vector<std::string> parts;
+  boost::split(parts, encoded, boost::is_any_of(":"));
+
+  std::istringstream stream(parts[0]);
+  int nCharacters;
+  stream >> nCharacters;
+
+  return parts[1].substr(0, nCharacters);
 }
 

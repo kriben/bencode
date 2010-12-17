@@ -7,6 +7,8 @@ class Bencode
 {
 public:
   static int decodeInt(const std::string& encoded);
+  
+  static std::string decodeString(const std::string& encoded);
 
 private:
   Bencode();

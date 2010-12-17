@@ -25,7 +25,13 @@ void TestBencode::testDecodeIllegalInts()
   CPPUNIT_ASSERT_THROW(Bencode::decodeInt("i-0e"), std::invalid_argument);
 }
 
-
+void TestBencode::testDecodeLegalStrings()
+{
+  CPPUNIT_ASSERT_EQUAL(std::string("spam"), Bencode::decodeString("4:spam"));
+  CPPUNIT_ASSERT_EQUAL(std::string("yes"), Bencode::decodeString("3:yes"));
+  CPPUNIT_ASSERT_EQUAL(std::string("Kristian Bendiksen"),
+		       Bencode::decodeString("18:Kristian Bendiksen"));
+}
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencode);
