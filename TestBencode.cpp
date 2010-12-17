@@ -33,5 +33,11 @@ void TestBencode::testDecodeLegalStrings()
 		       Bencode::decodeString("18:Kristian Bendiksen"));
 }
 
+void TestBencode::testDecodeIllegalStrings()
+{
+  CPPUNIT_ASSERT_THROW(Bencode::decodeString(""), std::invalid_argument);
+  CPPUNIT_ASSERT_THROW(Bencode::decodeString("spam"), std::invalid_argument);
+  CPPUNIT_ASSERT_THROW(Bencode::decodeString("-2:no"), std::invalid_argument);
+}
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencode);
