@@ -60,6 +60,9 @@ std::string Bencode::decodeString(const std::string& encoded)
   if (nCharacters < 0)
     throw std::invalid_argument("Negative string length");
 
-  return parts[1].substr(0, nCharacters);
+  if (parts[1].size() != static_cast<unsigned int>(nCharacters))
+    throw std::invalid_argument("String is incorrectly sized");
+
+  return parts[1];
 }
 

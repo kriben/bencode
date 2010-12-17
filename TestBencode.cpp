@@ -31,6 +31,7 @@ void TestBencode::testDecodeLegalStrings()
   CPPUNIT_ASSERT_EQUAL(std::string("yes"), Bencode::decodeString("3:yes"));
   CPPUNIT_ASSERT_EQUAL(std::string("Kristian Bendiksen"),
 		       Bencode::decodeString("18:Kristian Bendiksen"));
+  CPPUNIT_ASSERT_EQUAL(std::string(""), Bencode::decodeString("0:"));
 }
 
 void TestBencode::testDecodeIllegalStrings()
@@ -39,5 +40,12 @@ void TestBencode::testDecodeIllegalStrings()
   CPPUNIT_ASSERT_THROW(Bencode::decodeString("spam"), std::invalid_argument);
   CPPUNIT_ASSERT_THROW(Bencode::decodeString("-2:no"), std::invalid_argument);
 }
+
+void TestBencode::testDecodeIncorrectlySizedStrings()
+{
+  CPPUNIT_ASSERT_THROW(Bencode::decodeString("3:no"), std::invalid_argument);
+  CPPUNIT_ASSERT_THROW(Bencode::decodeString("2:yes"), std::invalid_argument);
+}
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencode);
