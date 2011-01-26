@@ -2,6 +2,7 @@
 #define BENCODE_H
 
 #include <string>
+#include <vector>
 
 class Bencode 
 {
@@ -10,7 +11,9 @@ public:
   
   static std::string decodeString(const std::string& encoded);
 
-private:
+  static void tokenize(const std::string& encoded, std::vector<std::string>& tokens);
+  
+ private:
   Bencode();
 
 };

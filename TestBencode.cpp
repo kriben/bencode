@@ -47,5 +47,88 @@ void TestBencode::testDecodeIncorrectlySizedStrings()
   CPPUNIT_ASSERT_THROW(Bencode::decodeString("2:yes"), std::invalid_argument);
 }
 
+void TestBencode::testTokenizeInt()
+{
+  std::vector<std::string> tokens;
+  Bencode::tokenize("i3e", tokens);
+
+  std::vector<std::string> expectedTokens;
+  expectedTokens.push_back("i");
+  expectedTokens.push_back("3");
+  expectedTokens.push_back("e");
+
+  verifyTokens(expectedTokens, tokens);
+}
+
+void TestBencode::testTokenizeNegativeInt()
+{
+  std::vector<std::string> tokens;
+  Bencode::tokenize("i-123e", tokens);
+
+  std::vector<std::string> expectedTokens;
+  expectedTokens.push_back("i");
+  expectedTokens.push_back("-123");
+  expectedTokens.push_back("e");
+
+  verifyTokens(expectedTokens, tokens);
+}
+
+
+void TestBencode::testTokenizeString()
+{
+  std::vector<std::string> tokens;
+  Bencode::tokenize("4:spam", tokens);
+
+  std::vector<std::string> expectedTokens;
+  expectedTokens.push_back("s");
+  expectedTokens.push_back("spam");
+  verifyTokens(expectedTokens, tokens);
+}
+
+
+
+void TestBencode::testTokenizeList()
+{
+  std::vector<std::string> tokens;
+  Bencode::tokenize("l4:spam4:eggse", tokens);
+
+  std::vector<std::string> expectedTokens;
+  expectedTokens.push_back("l");
+  expectedTokens.push_back("s");
+  expectedTokens.push_back("spam");
+  expectedTokens.push_back("s");
+  expectedTokens.push_back("eggs");
+  expectedTokens.push_back("e");
+
+  verifyTokens(expectedTokens, tokens);
+}
+
+
+void TestBencode::verifyTokens(const std::vector<std::string>& expected,
+			       const std::vector<std::string>& actual)
+{
+  std::cout << std::endl;
+  for (unsigned int i = 0; i < std::max(actual.size(), expected.size()); i++) {
+    std::cout << "[" << i << "]: "
+	      << "expected: {";
+    if (i < expected.size())
+      std::cout << expected[i]; 
+    else
+      std::cout << "__MISSING__";
+    std::cout << "} "
+    	      << "actual: {";
+
+    if (i < actual.size())
+      std::cout << actual[i];
+    else 
+      std::cout << "__MISSING__";
+    std::cout << "}\n";
+    CPPUNIT_ASSERT_EQUAL(expected[i], actual[i]);
+  }
+
+  CPPUNIT_ASSERT_EQUAL(expected.size(), actual.size());
+}
+
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencode);
