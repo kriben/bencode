@@ -2,6 +2,8 @@
 #include "Bencode.h"
 
 #include <stdexcept>
+#include <boost/assign/std/vector.hpp>
+using namespace boost::assign;
 
 void TestBencode::testDecodeLegalInts()
 {
@@ -53,9 +55,7 @@ void TestBencode::testTokenizeInt()
   Bencode::tokenize("i3e", tokens);
 
   std::vector<std::string> expectedTokens;
-  expectedTokens.push_back("i");
-  expectedTokens.push_back("3");
-  expectedTokens.push_back("e");
+  expectedTokens += "i", "3", "e";
 
   verifyTokens(expectedTokens, tokens);
 }
@@ -66,9 +66,7 @@ void TestBencode::testTokenizeNegativeInt()
   Bencode::tokenize("i-123e", tokens);
 
   std::vector<std::string> expectedTokens;
-  expectedTokens.push_back("i");
-  expectedTokens.push_back("-123");
-  expectedTokens.push_back("e");
+  expectedTokens += "i", "-123", "e";
 
   verifyTokens(expectedTokens, tokens);
 }
@@ -80,8 +78,8 @@ void TestBencode::testTokenizeString()
   Bencode::tokenize("4:spam", tokens);
 
   std::vector<std::string> expectedTokens;
-  expectedTokens.push_back("s");
-  expectedTokens.push_back("spam");
+  expectedTokens += "s", "spam";
+
   verifyTokens(expectedTokens, tokens);
 }
 
@@ -93,13 +91,19 @@ void TestBencode::testTokenizeList()
   Bencode::tokenize("l4:spam4:eggse", tokens);
 
   std::vector<std::string> expectedTokens;
-  expectedTokens.push_back("l");
-  expectedTokens.push_back("s");
-  expectedTokens.push_back("spam");
-  expectedTokens.push_back("s");
-  expectedTokens.push_back("eggs");
-  expectedTokens.push_back("e");
+  expectedTokens += "l", "s", "spam", "s", "eggs", "e";
 
+  verifyTokens(expectedTokens, tokens);
+}
+
+
+void TestBencode::testTokenizeDict()
+{
+  std::vector<std::string> tokens;
+  Bencode::tokenize("d3:cow3:moo4:spam4:eggse", tokens);
+
+  std::vector<std::string> expectedTokens;
+  expectedTokens += "d", "s", "cow", "s", "moo", "s", "spam", "s", "eggs", "e";
   verifyTokens(expectedTokens, tokens);
 }
 
@@ -107,26 +111,16 @@ void TestBencode::testTokenizeList()
 void TestBencode::verifyTokens(const std::vector<std::string>& expected,
 			       const std::vector<std::string>& actual)
 {
-  std::cout << std::endl;
-  for (unsigned int i = 0; i < std::max(actual.size(), expected.size()); i++) {
-    std::cout << "[" << i << "]: "
-	      << "expected: {";
-    if (i < expected.size())
-      std::cout << expected[i]; 
-    else
-      std::cout << "__MISSING__";
-    std::cout << "} "
-    	      << "actual: {";
+  CPPUNIT_ASSERT_EQUAL(expected.size(), actual.size());
 
-    if (i < actual.size())
-      std::cout << actual[i];
-    else 
-      std::cout << "__MISSING__";
-    std::cout << "}\n";
+  //  std::cout << std::endl;
+  for (unsigned int i = 0; i < std::max(actual.size(), expected.size()); i++) {
+    // std::cout << "[" << i << "]: "
+    // 	      << "expected: {" << expected[i] << "} "
+    // 	      << "actual: {" << actual[i] << "}\n";
+
     CPPUNIT_ASSERT_EQUAL(expected[i], actual[i]);
   }
-
-  CPPUNIT_ASSERT_EQUAL(expected.size(), actual.size());
 }
 
 

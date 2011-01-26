@@ -19,6 +19,7 @@ public:
   void testTokenizeNegativeInt();
   void testTokenizeString();
   void testTokenizeList();
+  void testTokenizeDict();
 private:
   static void verifyTokens(const std::vector<std::string>& expected,
 			   const std::vector<std::string>& actual);
@@ -33,6 +34,7 @@ private:
   CPPUNIT_TEST(testTokenizeNegativeInt);
   CPPUNIT_TEST(testTokenizeString);
   CPPUNIT_TEST(testTokenizeList);
+  CPPUNIT_TEST(testTokenizeDict);
   CPPUNIT_TEST_SUITE_END();
 };
 
