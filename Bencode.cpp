@@ -1,4 +1,5 @@
 #include "Bencode.h"
+#include "Tokenizer.h"
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string.hpp>
@@ -11,36 +12,24 @@
 
 int Bencode::decodeInt(const std::string& encoded)
 {
-  if (encoded.size() < 3)
+  std::vector<std::string> tokens;
+  Tokenizer::tokenize(encoded, tokens);
+  
+  if (tokens.size() < 3)
     throw std::invalid_argument("Encoded data is too short");
 
-  if (encoded[0] != 'i')
+  if (tokens[0] != "i")
     throw std::invalid_argument("Incorrect encoding: does not start with 'i'");
 
-  if (encoded[encoded.size() - 1] != 'e')
+  if (tokens[2] != "e")
     throw std::invalid_argument("Incorrect encoding: does not end with 'e'");
-  
-  int length = 0;
-  int i = 1;
-  bool isNegative = false;
-  while (encoded[i] == '-' || (encoded[i] >= '0' && encoded[i] <= '9')) {
-    if (encoded[i] == '-') {
-      // Multiple minus signes are not allowed
-      if (isNegative)
-	throw std::invalid_argument("Multiple '-' signs found");
-      isNegative = true;
-    }
-    
-    i++;
-    length++;
-  }
 
-  std::istringstream stream(encoded.substr(1, length));
+  if (tokens[1] == "-0")
+    throw std::invalid_argument("Negative zero is not allowed");
+  
+  std::istringstream stream(tokens[1]);
   int value;
   stream >> value;
-
-  if (value == 0 && isNegative)
-    throw std::invalid_argument("Negative zero is not allowed");
     
   return value;
 }
