@@ -57,6 +57,7 @@ void TestTokenizer::testTokenizeTooShortString()
   std::vector<std::string> tokens;
   CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("4:nei", tokens), 
 		       std::invalid_argument);
+  CPPUNIT_ASSERT(tokens.empty());
 }
 
 void TestTokenizer::testTokenizeTooLongString()
@@ -64,6 +65,7 @@ void TestTokenizer::testTokenizeTooLongString()
   std::vector<std::string> tokens;
   CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("2:jepp", tokens), 
 		       std::invalid_argument);
+  CPPUNIT_ASSERT(tokens.empty());
 }
 
 void TestTokenizer::testTokenizeList()

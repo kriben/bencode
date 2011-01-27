@@ -33,8 +33,10 @@ void Tokenizer::tokenize(const std::string& encoded,
 	unsigned int value;
 	stream >> value;
 	tokens.push_back("s");
-	if (size + value > current.size())
+	if (size + value > current.size()) {
+	  tokens.clear();
 	  throw std::invalid_argument("Incorrectly sized string");
+	}
 
 	tokens.push_back(current.substr(size, value));
 	i += value + size;
@@ -45,6 +47,7 @@ void Tokenizer::tokenize(const std::string& encoded,
       }
     }
     else {
+      tokens.clear();
       throw std::invalid_argument("Invalid formatted input.");
     }
   }
