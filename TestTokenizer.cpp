@@ -2,6 +2,7 @@
 #include "Tokenizer.h"
 
 #include <boost/assign/std/vector.hpp>
+#include <stdexcept>
 
 using namespace boost::assign;
 
@@ -40,7 +41,30 @@ void TestTokenizer::testTokenizeString()
   verifyTokens(expectedTokens, tokens);
 }
 
+void TestTokenizer::testTokenizeLongerString()
+{
+  std::vector<std::string> tokens;
+  Tokenizer::tokenize("18:Kristian Bendiksen", tokens);
+  
+  std::vector<std::string> expectedTokens;
+  expectedTokens += "s", "Kristian Bendiksen";
 
+  verifyTokens(expectedTokens, tokens);
+}
+
+void TestTokenizer::testTokenizeTooShortString()
+{
+  std::vector<std::string> tokens;
+  CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("4:nei", tokens), 
+		       std::invalid_argument);
+}
+
+void TestTokenizer::testTokenizeTooLongString()
+{
+  std::vector<std::string> tokens;
+  CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("2:jepp", tokens), 
+		       std::invalid_argument);
+}
 
 void TestTokenizer::testTokenizeList()
 {

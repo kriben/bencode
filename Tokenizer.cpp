@@ -25,17 +25,19 @@ void Tokenizer::tokenize(const std::string& encoded,
       // for(unsigned int j = 0; j < what.size(); ++j) {
       // 	std::cout << "Captures:" << what[i] << std::endl;
       // 	std::cout << "{" << what[j].str() << "}\n";
-	
       // }
 
-      // 
       if (!what[2].str().empty()) {
 	std::istringstream stream(what[2].str());
-	int value;
+	unsigned int size = what[2].str().size() + 1; // + 1 for the colon
+	unsigned int value;
 	stream >> value;
 	tokens.push_back("s");
-	tokens.push_back(current.substr(2, value));
-	i += value + 2;
+	if (size + value > current.size())
+	  throw std::invalid_argument("Incorrectly sized string");
+
+	tokens.push_back(current.substr(size, value));
+	i += value + size;
       }
       else {
 	tokens.push_back(what[0].str());
@@ -43,7 +45,7 @@ void Tokenizer::tokenize(const std::string& encoded,
       }
     }
     else {
-      i = encoded.size();
+      throw std::invalid_argument("Invalid formatted input.");
     }
   }
 }

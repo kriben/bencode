@@ -36,23 +36,15 @@ int Bencode::decodeInt(const std::string& encoded)
 
 std::string Bencode::decodeString(const std::string& encoded)
 {
-  if (encoded.empty())
-    throw std::invalid_argument("String is empty");
+  std::vector<std::string> tokens;
+  Tokenizer::tokenize(encoded, tokens);
 
-  std::vector<std::string> parts;
-  boost::split(parts, encoded, boost::is_any_of(":"));
-  if (parts.size() != 2)
-    throw std::invalid_argument("Missing colon");
-  
-  std::istringstream stream(parts[0]);
-  int nCharacters;
-  stream >> nCharacters;
-  if (nCharacters < 0)
-    throw std::invalid_argument("Negative string length");
+  if (tokens.size() != 2)
+    throw std::invalid_argument("Unable to decode");
 
-  if (parts[1].size() != static_cast<unsigned int>(nCharacters))
-    throw std::invalid_argument("String is incorrectly sized");
+  if (tokens[0] != "s")
+    throw std::invalid_argument("Not a string");
 
-  return parts[1];
+  return tokens[1];
 }
 
