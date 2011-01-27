@@ -11,8 +11,6 @@ public:
   
   static std::string decodeString(const std::string& encoded);
 
-  static void tokenize(const std::string& encoded, std::vector<std::string>& tokens);
-  
  private:
   Bencode();
 
