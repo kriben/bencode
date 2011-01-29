@@ -27,4 +27,31 @@ void TestBencodeDecoder::testDecodeIllegalInts()
 }
 
 
+void TestBencodeDecoder::testDecodeLegalStrings()
+{
+  CPPUNIT_ASSERT_EQUAL(std::string("spam"), 
+		       boost::get<std::string>(BencodeDecoder::decode("4:spam")));
+  CPPUNIT_ASSERT_EQUAL(std::string("yes"), 
+   		       boost::get<std::string>(BencodeDecoder::decode("3:yes")));
+  CPPUNIT_ASSERT_EQUAL(std::string("Kristian Bendiksen"),
+   		       boost::get<std::string>(BencodeDecoder::decode("18:Kristian Bendiksen")));
+  CPPUNIT_ASSERT_EQUAL(std::string(""),
+		       boost::get<std::string>(BencodeDecoder::decode("0:")));
+}
+
+void TestBencodeDecoder::testDecodeIllegalStrings()
+{
+  CPPUNIT_ASSERT_THROW(BencodeDecoder::decode(""), std::invalid_argument);
+  CPPUNIT_ASSERT_THROW(BencodeDecoder::decode("spam"), std::invalid_argument);
+  CPPUNIT_ASSERT_THROW(BencodeDecoder::decode("-2:no"), std::invalid_argument);
+}
+
+void TestBencodeDecoder::testDecodeIncorrectlySizedStrings()
+{
+  CPPUNIT_ASSERT_THROW(BencodeDecoder::decode("3:no"), std::invalid_argument);
+  CPPUNIT_ASSERT_THROW(BencodeDecoder::decode("2:yes"), std::invalid_argument);
+}
+
+
+
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencodeDecoder);

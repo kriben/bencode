@@ -11,11 +11,16 @@ Value BencodeDecoder::decode(const std::string& encoded)
 {
   std::vector<std::string> tokens;
   Tokenizer::tokenize(encoded, tokens);
-  if (tokens.size() < 3)
+
+
+  if (tokens.empty())
     throw std::invalid_argument("Encoded data is too short");
 
   if (tokens[0] == "i") {
-    if (tokens[2] != "e") 
+    if (tokens.size() < 3)
+      throw std::invalid_argument("Encoded data is too short");
+
+    if (tokens[2] != "e")
       throw std::invalid_argument("Incorrect encoding: does not end with 'e'");
 
     if (tokens[1] == "-0")
@@ -28,6 +33,9 @@ Value BencodeDecoder::decode(const std::string& encoded)
     catch (boost::bad_lexical_cast&) {
       throw std::invalid_argument("Incorrect integer: " + tokens[1]);
     }
+  }
+  else if (tokens[0] == "s") {
+    return Value(tokens[1]);
   }
 
   return Value(0);
