@@ -60,7 +60,19 @@ Value BencodeDecoder::decode(std::deque<std::string>& tokens)
 
     return vec;
   }
+  else if (tokens.front() == "d") {
+    // Make a list
+    ValueVector vec;
+    tokens.pop_front(); // eat the "d"
+    while (tokens.front() != "e")
+      vec.push_back(decode(tokens));
 
+    ValueDictionary dict;
+    for (unsigned int i = 0; i < vec.size(); i += 2)
+      dict[boost::get<std::string>(vec[i])] = vec[i+1];
+
+    return dict;
+  }
 
   return Value(0);
 }

@@ -61,4 +61,14 @@ void TestBencodeDecoder::testDecodeShortList()
   CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), vec.size());
 }
 
+
+void TestBencodeDecoder::testDecodeSimpleDictionary()
+{
+  ValueDictionary dict =
+    boost::get<ValueDictionary>(
+      BencodeDecoder::decode("d3:cow3:moo4:spam4:eggse"));
+
+  CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), dict.size());
+}
+
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencodeDecoder);
