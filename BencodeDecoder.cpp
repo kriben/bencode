@@ -25,18 +25,14 @@ Value BencodeDecoder::decode(std::deque<std::string>& tokens)
   if (tokens.empty())
     throw std::invalid_argument("Encoded data is too short");
 
-  if (tokens.front() == "i") {
+  if (tokens.front() == "i")
     return decodeInteger(tokens);
-  }
-  else if (tokens.front() == "s") {
+  else if (tokens.front() == "s")
     return decodeString(tokens);
-  }
-  else if (tokens.front() == "l") {
+  else if (tokens.front() == "l")
     return decodeVector(tokens);
-  }
-  else if (tokens.front() == "d") {
+  else if (tokens.front() == "d")
     return decodeDictionary(tokens);
-  }
 
   return Value(0);
 }
@@ -44,6 +40,8 @@ Value BencodeDecoder::decode(std::deque<std::string>& tokens)
 
 Value BencodeDecoder::decodeInteger(std::deque<std::string>& tokens)
 {
+  assert(tokens.front() == "i");
+
   if (tokens.size() < 3)
     throw std::invalid_argument("Encoded data is too short");
 
@@ -67,6 +65,8 @@ Value BencodeDecoder::decodeInteger(std::deque<std::string>& tokens)
 
 Value BencodeDecoder::decodeString(std::deque<std::string>& tokens)
 {
+  assert(tokens.front() == "s");
+
   tokens.pop_front(); // eat the "s"
   std::string value = tokens.front();
   tokens.pop_front(); // eat the value
@@ -76,6 +76,8 @@ Value BencodeDecoder::decodeString(std::deque<std::string>& tokens)
 
 Value BencodeDecoder::decodeVector(std::deque<std::string>& tokens)
 {
+  assert(tokens.front() == "l" || tokens.front() == "d");
+
   ValueVector vec;
   tokens.pop_front(); // eat the "l"
   while (tokens.front() != "e")
@@ -87,11 +89,10 @@ Value BencodeDecoder::decodeVector(std::deque<std::string>& tokens)
 
 Value BencodeDecoder::decodeDictionary(std::deque<std::string>& tokens)
 {
+  assert(tokens.front() == "d");
+
   // Make a list
-  ValueVector vec;
-  tokens.pop_front(); // eat the "d"
-  while (tokens.front() != "e")
-    vec.push_back(decode(tokens));
+  ValueVector vec = boost::get<ValueVector>(decodeVector(tokens));
 
   ValueDictionary dict;
   for (unsigned int i = 0; i < vec.size(); i += 2)
