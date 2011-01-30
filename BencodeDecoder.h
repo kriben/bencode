@@ -19,6 +19,8 @@ public:
 
   static Value decodeString(std::deque<std::string>& tokens);
 
+  static Value decodeVector(std::deque<std::string>& tokens);
+
   BencodeDecoder();
 
 };

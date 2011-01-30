@@ -32,12 +32,7 @@ Value BencodeDecoder::decode(std::deque<std::string>& tokens)
     return decodeString(tokens);
   }
   else if (tokens.front() == "l") {
-    ValueVector vec;
-    tokens.pop_front(); // eat the "l"
-    while (tokens.front() != "e")
-      vec.push_back(decode(tokens));
-
-    return vec;
+    return decodeVector(tokens);
   }
   else if (tokens.front() == "d") {
     // Make a list
@@ -86,4 +81,15 @@ Value BencodeDecoder::decodeString(std::deque<std::string>& tokens)
   std::string value = tokens.front();
   tokens.pop_front(); // eat the value
   return Value(value);
+}
+
+
+Value BencodeDecoder::decodeVector(std::deque<std::string>& tokens)
+{
+  ValueVector vec;
+  tokens.pop_front(); // eat the "l"
+  while (tokens.front() != "e")
+    vec.push_back(decode(tokens));
+
+  return vec;
 }
