@@ -59,6 +59,8 @@ void TestBencodeDecoder::testDecodeShortList()
     boost::get<ValueVector>(BencodeDecoder::decode("l4:spam4:eggse"));
 
   CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), vec.size());
+  CPPUNIT_ASSERT_EQUAL(std::string("spam"), boost::get<std::string>(vec[0]));
+  CPPUNIT_ASSERT_EQUAL(std::string("eggs"), boost::get<std::string>(vec[1]));
 }
 
 
@@ -69,6 +71,11 @@ void TestBencodeDecoder::testDecodeSimpleDictionary()
       BencodeDecoder::decode("d3:cow3:moo4:spam4:eggse"));
 
   CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), dict.size());
+  CPPUNIT_ASSERT_EQUAL(std::string("moo"),
+		       boost::get<std::string>(dict["cow"]));
+
+  CPPUNIT_ASSERT_EQUAL(std::string("eggs"),
+		       boost::get<std::string>(dict["spam"]));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencodeDecoder);
