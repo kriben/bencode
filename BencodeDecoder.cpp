@@ -29,10 +29,7 @@ Value BencodeDecoder::decode(std::deque<std::string>& tokens)
     return decodeInteger(tokens);
   }
   else if (tokens.front() == "s") {
-    tokens.pop_front(); // eat the "s"
-    std::string value = tokens.front();
-    tokens.pop_front(); // eat the value
-    return Value(value);
+    return decodeString(tokens);
   }
   else if (tokens.front() == "l") {
     ValueVector vec;
@@ -81,4 +78,12 @@ Value BencodeDecoder::decodeInteger(std::deque<std::string>& tokens)
   catch (boost::bad_lexical_cast&) {
     throw std::invalid_argument("Incorrect integer: " + tokens[1]);
   }
+}
+
+Value BencodeDecoder::decodeString(std::deque<std::string>& tokens)
+{
+  tokens.pop_front(); // eat the "s"
+  std::string value = tokens.front();
+  tokens.pop_front(); // eat the value
+  return Value(value);
 }
