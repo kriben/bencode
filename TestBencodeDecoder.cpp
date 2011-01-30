@@ -29,9 +29,9 @@ void TestBencodeDecoder::testDecodeIllegalInts()
 
 void TestBencodeDecoder::testDecodeLegalStrings()
 {
-  CPPUNIT_ASSERT_EQUAL(std::string("spam"), 
+  CPPUNIT_ASSERT_EQUAL(std::string("spam"),
 		       boost::get<std::string>(BencodeDecoder::decode("4:spam")));
-  CPPUNIT_ASSERT_EQUAL(std::string("yes"), 
+  CPPUNIT_ASSERT_EQUAL(std::string("yes"),
    		       boost::get<std::string>(BencodeDecoder::decode("3:yes")));
   CPPUNIT_ASSERT_EQUAL(std::string("Kristian Bendiksen"),
    		       boost::get<std::string>(BencodeDecoder::decode("18:Kristian Bendiksen")));
@@ -53,5 +53,12 @@ void TestBencodeDecoder::testDecodeIncorrectlySizedStrings()
 }
 
 
+void TestBencodeDecoder::testDecodeShortList()
+{
+  ValueVector vec =
+    boost::get<ValueVector>(BencodeDecoder::decode("l4:spam4:eggse"));
+
+  CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), vec.size());
+}
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencodeDecoder);

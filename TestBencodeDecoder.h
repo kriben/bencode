@@ -12,7 +12,7 @@ public:
   void testDecodeLegalStrings();
   void testDecodeIllegalStrings();
   void testDecodeIncorrectlySizedStrings();
-
+  void testDecodeShortList();
 private:
   CPPUNIT_TEST_SUITE(TestBencodeDecoder);
   CPPUNIT_TEST(testDecodeLegalInts);
@@ -20,7 +20,7 @@ private:
   CPPUNIT_TEST(testDecodeLegalStrings);
   CPPUNIT_TEST(testDecodeIllegalStrings);
   CPPUNIT_TEST(testDecodeIncorrectlySizedStrings);
-
+  CPPUNIT_TEST(testDecodeShortList);
   CPPUNIT_TEST_SUITE_END();
 };
 
