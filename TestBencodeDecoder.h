@@ -14,6 +14,7 @@ public:
   void testDecodeIncorrectlySizedStrings();
   void testDecodeShortList();
   void testDecodeSimpleDictionary();
+  void testDecodeNestedList();
 private:
   CPPUNIT_TEST_SUITE(TestBencodeDecoder);
   CPPUNIT_TEST(testDecodeLegalInts);
@@ -23,6 +24,7 @@ private:
   CPPUNIT_TEST(testDecodeIncorrectlySizedStrings);
   CPPUNIT_TEST(testDecodeShortList);
   CPPUNIT_TEST(testDecodeSimpleDictionary);
+  CPPUNIT_TEST(testDecodeNestedList);
   CPPUNIT_TEST_SUITE_END();
 };
 

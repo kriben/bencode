@@ -78,4 +78,28 @@ void TestBencodeDecoder::testDecodeSimpleDictionary()
 		       boost::get<std::string>(dict["spam"]));
 }
 
+void TestBencodeDecoder::testDecodeNestedList()
+{
+  ValueVector firstVector =
+    boost::get<ValueVector>(
+      BencodeDecoder::decode("lll5:first6:seconde7:missingee"));
+  CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), firstVector.size());
+
+  ValueVector secondVector = boost::get<ValueVector>(firstVector[0]);
+  CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), secondVector.size());
+
+  CPPUNIT_ASSERT_EQUAL(std::string("missing"),
+		       boost::get<std::string>(secondVector[1]));
+
+  ValueVector thirdVector = boost::get<ValueVector>(secondVector[0]);
+  CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), thirdVector.size());
+
+  CPPUNIT_ASSERT_EQUAL(std::string("first"),
+		       boost::get<std::string>(thirdVector[0]));
+
+  CPPUNIT_ASSERT_EQUAL(std::string("second"),
+		       boost::get<std::string>(thirdVector[1]));
+}
+
+
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBencodeDecoder);

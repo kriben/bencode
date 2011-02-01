@@ -83,6 +83,8 @@ Value BencodeDecoder::decodeVector(std::deque<std::string>& tokens)
   while (tokens.front() != "e")
     vec.push_back(decode(tokens));
 
+  tokens.pop_front(); // eat the "e"
+
   return vec;
 }
 
