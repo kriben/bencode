@@ -11,6 +11,7 @@ env.Append(CPPPATH = '.')
 
 env.SharedLibrary("libbencode",
                   ["Decoder.cpp",
+                   "Encoder.cpp",
                    "Tokenizer.cpp",
                    "PrettyPrinter.cpp"],
                   LIBS = ["libboost_regex-mt"])
@@ -18,6 +19,7 @@ env.SharedLibrary("libbencode",
 env.Program("tester",
             ["tests/main.cpp",
              "tests/TestDecoder.cpp",
+             "tests/TestEncoder.cpp",
              "tests/TestTokenizer.cpp",
              "tests/TestValueTypes.cpp"],
             LIBS = ["libbencode", "cppunit"],
