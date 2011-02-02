@@ -1,5 +1,5 @@
-#ifndef BENCODEDECODER_H
-#define BENCODEDECODER_H
+#ifndef DECODER_H
+#define DECODER_H
 
 #include "ValueTypes.h"
 
@@ -7,7 +7,7 @@
 #include <deque>
 
 
-class BencodeDecoder
+class Decoder
 {
 public:
   static Value decode(const std::string& encoded);
@@ -23,7 +23,7 @@ public:
 
   static Value decodeDictionary(std::deque<std::string>& tokens);
 
-  BencodeDecoder();
+  Decoder();
 
 };
 

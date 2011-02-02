@@ -10,14 +10,14 @@ env.Append(CXXFLAGS = "-Wall -Werror")
 env.Append(CPPPATH = '.')
 
 env.SharedLibrary("libbencode",
-                  ["BencodeDecoder.cpp",
+                  ["Decoder.cpp",
                    "Tokenizer.cpp",
                    "PrettyPrinter.cpp"],
                   LIBS = ["libboost_regex-mt"])
 
 env.Program("tester",
             ["tests/main.cpp",
-             "tests/TestBencodeDecoder.cpp",
+             "tests/TestDecoder.cpp",
              "tests/TestTokenizer.cpp",
              "tests/TestValueTypes.cpp"],
             LIBS = ["libbencode", "cppunit"],

@@ -1,10 +1,10 @@
-#ifndef TESTBENCODEDECODER_H
-#define TESTBENCODEDECODER_H
+#ifndef TESTDECODER_H
+#define TESTDECODER_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
-class TestBencodeDecoder : public CppUnit::TestFixture
+class TestDecoder : public CppUnit::TestFixture
 {
 public:
   void testDecodeLegalInts();
@@ -16,7 +16,7 @@ public:
   void testDecodeSimpleDictionary();
   void testDecodeNestedList();
 private:
-  CPPUNIT_TEST_SUITE(TestBencodeDecoder);
+  CPPUNIT_TEST_SUITE(TestDecoder);
   CPPUNIT_TEST(testDecodeLegalInts);
   CPPUNIT_TEST(testDecodeIllegalInts);
   CPPUNIT_TEST(testDecodeLegalStrings);

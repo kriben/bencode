@@ -1,4 +1,4 @@
-#include "BencodeDecoder.h"
+#include "Decoder.h"
 #include "Tokenizer.h"
 
 #include <boost/lexical_cast.hpp>
@@ -7,7 +7,7 @@
 #include <deque>
 
 
-Value BencodeDecoder::decode(const std::string& encoded)
+Value Decoder::decode(const std::string& encoded)
 {
   std::vector<std::string> tokens;
   Tokenizer::tokenize(encoded, tokens);
@@ -20,7 +20,7 @@ Value BencodeDecoder::decode(const std::string& encoded)
   return decode(tokensDeque);
 }
 
-Value BencodeDecoder::decode(std::deque<std::string>& tokens)
+Value Decoder::decode(std::deque<std::string>& tokens)
 {
   if (tokens.empty())
     throw std::invalid_argument("Encoded data is too short");
@@ -38,7 +38,7 @@ Value BencodeDecoder::decode(std::deque<std::string>& tokens)
 }
 
 
-Value BencodeDecoder::decodeInteger(std::deque<std::string>& tokens)
+Value Decoder::decodeInteger(std::deque<std::string>& tokens)
 {
   assert(tokens.front() == "i");
 
@@ -63,7 +63,7 @@ Value BencodeDecoder::decodeInteger(std::deque<std::string>& tokens)
   }
 }
 
-Value BencodeDecoder::decodeString(std::deque<std::string>& tokens)
+Value Decoder::decodeString(std::deque<std::string>& tokens)
 {
   assert(tokens.front() == "s");
 
@@ -74,7 +74,7 @@ Value BencodeDecoder::decodeString(std::deque<std::string>& tokens)
 }
 
 
-Value BencodeDecoder::decodeVector(std::deque<std::string>& tokens)
+Value Decoder::decodeVector(std::deque<std::string>& tokens)
 {
   assert(tokens.front() == "l" || tokens.front() == "d");
 
@@ -89,7 +89,7 @@ Value BencodeDecoder::decodeVector(std::deque<std::string>& tokens)
 }
 
 
-Value BencodeDecoder::decodeDictionary(std::deque<std::string>& tokens)
+Value Decoder::decodeDictionary(std::deque<std::string>& tokens)
 {
   assert(tokens.front() == "d");
 
