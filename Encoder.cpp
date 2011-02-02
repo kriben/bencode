@@ -13,9 +13,11 @@ public:
     return stream.str();
   }
 
-  std::string operator()(const std::string& t) const
+  std::string operator()(const std::string& value) const
   {
-    return "";
+    std::stringstream stream;
+    stream << value.size() << ":" << value;
+    return stream.str();
   }
 
   std::string operator()(const ValueDictionary& t) const

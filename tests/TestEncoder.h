@@ -8,9 +8,11 @@ class TestEncoder : public CppUnit::TestFixture
 {
 public:
   void testEncodeInts();
+  void testEncodeStrings();
 private:
   CPPUNIT_TEST_SUITE(TestEncoder);
   CPPUNIT_TEST(testEncodeInts);
+  CPPUNIT_TEST(testEncodeStrings);
   CPPUNIT_TEST_SUITE_END();
 };
 
