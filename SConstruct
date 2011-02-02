@@ -23,3 +23,8 @@ env.Program("tester",
             LIBS = ["libbencode", "cppunit"],
             LIBPATH='.')
 
+env.Program("printvalues",
+            ["examples/printvalues.cpp"],
+            LIBS = ["libbencode"],
+            LIBPATH='.')
+

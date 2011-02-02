@@ -1,5 +1,5 @@
 #include "ValueTypes.h"
-#include "BencodeDecoder.h"
+#include "Decoder.h"
 #include "PrettyPrinter.h"
 
 #include <boost/variant/apply_visitor.hpp>
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
   try {
     Value torrent =
-      boost::get<ValueDictionary>(BencodeDecoder::decode(buffer.str()));
+      boost::get<ValueDictionary>(Decoder::decode(buffer.str()));
     boost::apply_visitor(PrettyPrinter(), torrent);
   }
   catch (std::invalid_argument& e) {
