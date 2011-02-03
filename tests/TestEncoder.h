@@ -12,6 +12,8 @@ public:
   void testEncodeVector();
   void testEncodeDictionary();
   void testEncodeNestedDictionary();
+  void testIntegerRoundtrip();
+  void testStringRoundtrip();
 private:
   CPPUNIT_TEST_SUITE(TestEncoder);
   CPPUNIT_TEST(testEncodeInts);
@@ -19,6 +21,8 @@ private:
   CPPUNIT_TEST(testEncodeVector);
   CPPUNIT_TEST(testEncodeDictionary);
   CPPUNIT_TEST(testEncodeNestedDictionary);
+  CPPUNIT_TEST(testIntegerRoundtrip);
+  CPPUNIT_TEST(testStringRoundtrip);
   CPPUNIT_TEST_SUITE_END();
 };
 

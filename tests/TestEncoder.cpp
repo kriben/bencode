@@ -1,5 +1,6 @@
 #include "TestEncoder.h"
 #include "Encoder.h"
+#include "Decoder.h"
 
 #include <stdexcept>
 
@@ -65,5 +66,22 @@ void TestEncoder::testEncodeNestedDictionary()
 
   CPPUNIT_ASSERT_EQUAL(expected, Encoder::encode(teams));
 }
+
+void TestEncoder::testIntegerRoundtrip()
+{
+  Value input = 3;
+  Value output = Decoder::decode(Encoder::encode(input));
+  CPPUNIT_ASSERT_EQUAL(boost::get<int>(input), boost::get<int>(output));
+}
+
+void TestEncoder::testStringRoundtrip()
+{
+  Value input = "Fram og tilbake er like langt";
+  Value output = Decoder::decode(Encoder::encode(input));
+  CPPUNIT_ASSERT_EQUAL(boost::get<std::string>(input),
+		       boost::get<std::string>(output));
+}
+
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestEncoder);
