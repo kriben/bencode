@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+using namespace bencode;
+
 PrettyPrinter::PrettyPrinter(int indentation)
   : indentation_(indentation)
 {

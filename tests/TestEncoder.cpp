@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 
+using namespace bencode;
 
 void TestEncoder::testEncodeInts()
 {

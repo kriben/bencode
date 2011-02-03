@@ -8,13 +8,15 @@
 #include <iostream>
 
 
-void Tokenizer::tokenize(const std::string& encoded, 
+using namespace bencode;
+
+void Tokenizer::tokenize(const std::string& encoded,
 			 std::vector<std::string>& tokens)
 {
   boost::regex e("([idel])|(\\d+):|(-?\\d+)");
-  boost::match_results<std::string::const_iterator> what; 
+  boost::match_results<std::string::const_iterator> what;
   boost::match_flag_type flags = boost::match_extra;
-  
+
   int i = 0;
   while (i < static_cast<int>(encoded.size())) {
     std::string current = encoded.substr(i, encoded.size() - i);

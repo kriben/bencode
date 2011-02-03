@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <deque>
 
+using namespace bencode;
 
 Value Decoder::decode(const std::string& encoded)
 {

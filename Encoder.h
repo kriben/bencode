@@ -5,15 +5,18 @@
 
 #include <string>
 
-class Encoder
-{
-public:
-  static std::string encode(const Value& value);
+namespace bencode {
 
- private:
+  class Encoder
+  {
+  public:
+    static std::string encode(const Value& value);
 
-  Encoder();
+  private:
 
+    Encoder();
+
+  };
 };
 
 #endif

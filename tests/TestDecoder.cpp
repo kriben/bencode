@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 
+using namespace bencode;
 
 void TestDecoder::testDecodeLegalInts()
 {

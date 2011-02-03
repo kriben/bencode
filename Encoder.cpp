@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <sstream>
 
+using namespace bencode;
+
 class EncodeVisitor : public boost::static_visitor<std::string>
 {
 public:

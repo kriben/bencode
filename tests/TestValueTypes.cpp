@@ -1,6 +1,8 @@
 #include "TestValueTypes.h"
 #include "ValueTypes.h"
 
+using namespace bencode;
+
 void TestValueTypes::testInteger()
 {
   Value three = 3;
@@ -18,7 +20,7 @@ void TestValueTypes::testString()
 
 void TestValueTypes::testVector()
 {
-  ValueVector vec; 
+  ValueVector vec;
   vec.push_back("Kristian");
   vec.push_back(1979);
 
@@ -36,7 +38,7 @@ void TestValueTypes::testRecursiveVector()
 
   ValueVector outerVec;
   outerVec.push_back(innerVec);
-  
+
   CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), innerVec.size());
   CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), outerVec.size());
   CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), boost::get<ValueVector>(outerVec[0]).size());

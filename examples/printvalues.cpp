@@ -11,6 +11,8 @@
 #include <iostream>
 #include <stdexcept>
 
+using namespace bencode;
+
 int main(int argc, char* argv[])
 {
   if (argc < 2) {

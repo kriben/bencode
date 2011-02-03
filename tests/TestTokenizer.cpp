@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 using namespace boost::assign;
-
+using namespace bencode;
 
 void TestTokenizer::testTokenizeInt()
 {
@@ -45,7 +45,7 @@ void TestTokenizer::testTokenizeLongerString()
 {
   std::vector<std::string> tokens;
   Tokenizer::tokenize("18:Kristian Bendiksen", tokens);
-  
+
   std::vector<std::string> expectedTokens;
   expectedTokens += "s", "Kristian Bendiksen";
 
@@ -55,7 +55,7 @@ void TestTokenizer::testTokenizeLongerString()
 void TestTokenizer::testTokenizeTooShortString()
 {
   std::vector<std::string> tokens;
-  CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("4:nei", tokens), 
+  CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("4:nei", tokens),
 		       std::invalid_argument);
   CPPUNIT_ASSERT(tokens.empty());
 }
@@ -63,7 +63,7 @@ void TestTokenizer::testTokenizeTooShortString()
 void TestTokenizer::testTokenizeTooLongString()
 {
   std::vector<std::string> tokens;
-  CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("2:jepp", tokens), 
+  CPPUNIT_ASSERT_THROW(Tokenizer::tokenize("2:jepp", tokens),
 		       std::invalid_argument);
   CPPUNIT_ASSERT(tokens.empty());
 }
