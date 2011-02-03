@@ -23,4 +23,47 @@ void TestEncoder::testEncodeStrings()
 }
 
 
+void TestEncoder::testEncodeVector()
+{
+  ValueVector vec;
+  vec.push_back(Value("Red"));
+  vec.push_back(Value("Green"));
+  vec.push_back(Value(12));
+  vec.push_back(Value(-13));
+
+  std::string expected = "l3:Red5:Greeni12ei-13ee";
+  CPPUNIT_ASSERT_EQUAL(expected, Encoder::encode(vec));
+}
+
+void TestEncoder::testEncodeDictionary()
+{
+  ValueDictionary dict;
+  dict["Hamar"] = Value(2319);
+  dict["Trondheim"] = Value(7041);
+
+  std::string expected = "d5:Hamari2319e9:Trondheimi7041ee";
+  CPPUNIT_ASSERT_EQUAL(expected, Encoder::encode(dict));
+}
+
+
+void TestEncoder::testEncodeNestedDictionary()
+{
+  ValueDictionary spursPlayers;
+  spursPlayers["11"] = Value("Van der Vaart");
+  spursPlayers["26"] = Value("King");
+
+  ValueDictionary barcaPlayers;
+  barcaPlayers["10"] = Value("Messi");
+  barcaPlayers["6"] = Value("Xavi");
+
+  ValueDictionary teams;
+  teams["Tottenham"] = spursPlayers;
+  teams["Barcelona"] = barcaPlayers;
+
+  std::string expected = "d9:Barcelonad2:105:Messi1:64:Xavie"
+    "9:Tottenhamd2:1113:Van der Vaart2:264:Kingee";
+
+  CPPUNIT_ASSERT_EQUAL(expected, Encoder::encode(teams));
+}
+
 CPPUNIT_TEST_SUITE_REGISTRATION(TestEncoder);
