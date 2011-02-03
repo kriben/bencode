@@ -96,14 +96,8 @@ void TestTokenizer::verifyTokens(const std::vector<std::string>& expected,
 {
   CPPUNIT_ASSERT_EQUAL(expected.size(), actual.size());
 
-  //  std::cout << std::endl;
-  for (unsigned int i = 0; i < std::max(actual.size(), expected.size()); i++) {
-    // std::cout << "[" << i << "]: "
-    // 	      << "expected: {" << expected[i] << "} "
-    // 	      << "actual: {" << actual[i] << "}\n";
-
+  for (unsigned int i = 0; i < std::max(actual.size(), expected.size()); i++)
     CPPUNIT_ASSERT_EQUAL(expected[i], actual[i]);
-  }
 }
 
 

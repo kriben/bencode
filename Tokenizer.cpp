@@ -5,7 +5,6 @@
 #include <cassert>
 #include <sstream>
 #include <vector>
-#include <iostream>
 
 
 using namespace bencode;
@@ -20,16 +19,11 @@ void Tokenizer::tokenize(const std::string& encoded,
   int i = 0;
   while (i < static_cast<int>(encoded.size())) {
     std::string current = encoded.substr(i, encoded.size() - i);
-    //    std::cout << "\nChecking: " << current << std::endl;
     if(boost::regex_search(current, what, e, flags)) {
       assert(what.size() == 4);
-      // std::cout << "FOUND MATCH" << std::endl;
-      // for(unsigned int j = 0; j < what.size(); ++j) {
-      // 	std::cout << "Captures:" << what[i] << std::endl;
-      // 	std::cout << "{" << what[j].str() << "}\n";
-      // }
 
       if (!what[2].str().empty()) {
+	// Found a string
 	std::istringstream stream(what[2].str());
 	unsigned int size = what[2].str().size() + 1; // + 1 for the colon
 	unsigned int value;
