@@ -4,7 +4,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
-#include <vector>
+#include <deque>
 #include <string>
 
 class TestTokenizer : public CppUnit::TestFixture
@@ -19,8 +19,8 @@ public:
   void testTokenizeList();
   void testTokenizeDict();
 private:
-  static void verifyTokens(const std::vector<std::string>& expected,
-			   const std::vector<std::string>& actual);
+  static void verifyTokens(const std::deque<std::string>& expected,
+			   const std::deque<std::string>& actual);
 
   CPPUNIT_TEST_SUITE(TestTokenizer);
   CPPUNIT_TEST(testTokenizeInt);

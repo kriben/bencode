@@ -10,15 +10,10 @@ using namespace bencode;
 
 Value Decoder::decode(const std::string& encoded)
 {
-  std::vector<std::string> tokens;
+  std::deque<std::string> tokens;
   Tokenizer::tokenize(encoded, tokens);
 
-  // TODO: make tokenizer return a deque??
-  std::deque<std::string> tokensDeque;
-  for (unsigned int i = 0; i < tokens.size(); i++)
-    tokensDeque.push_back(tokens[i]);
-
-  return decode(tokensDeque);
+  return decode(tokens);
 }
 
 Value Decoder::decode(std::deque<std::string>& tokens)

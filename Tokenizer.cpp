@@ -10,7 +10,7 @@
 using namespace bencode;
 
 void Tokenizer::tokenize(const std::string& encoded,
-			 std::vector<std::string>& tokens)
+			 std::deque<std::string>& tokens)
 {
   boost::regex e("([idel])|(\\d+):|(-?\\d+)");
   boost::match_results<std::string::const_iterator> what;
